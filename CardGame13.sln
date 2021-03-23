@@ -1,0 +1,53 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30204.135
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{BE2D0EC5-F094-4CAF-BF9B-23314A69D113}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{814BB417-4E36-4A7E-954A-7475BB3D4652}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGame13.Game.Tests", "test\CardGame13.Data.Tests\CardGame13.Game.Tests.csproj", "{8FF29DC5-0B0D-445B-9409-A38968CA88AC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGame13.GUI", "src\CardGame13.GUI\CardGame13.GUI.csproj", "{6C183708-68FB-49EE-A52E-AA27E1E70EE7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGame13.Network", "src\CardGame13.Network\CardGame13.Network.csproj", "{0B5E6601-A488-4B22-9D61-BE39AC79FD43}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CardGame13.Game", "src\CardGame13.Game\CardGame13.Game.csproj", "{B3DBB810-BA7B-4DB7-B6AC-B9ABDD3BD98F}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{8FF29DC5-0B0D-445B-9409-A38968CA88AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8FF29DC5-0B0D-445B-9409-A38968CA88AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8FF29DC5-0B0D-445B-9409-A38968CA88AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8FF29DC5-0B0D-445B-9409-A38968CA88AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C183708-68FB-49EE-A52E-AA27E1E70EE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C183708-68FB-49EE-A52E-AA27E1E70EE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C183708-68FB-49EE-A52E-AA27E1E70EE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C183708-68FB-49EE-A52E-AA27E1E70EE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0B5E6601-A488-4B22-9D61-BE39AC79FD43}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0B5E6601-A488-4B22-9D61-BE39AC79FD43}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0B5E6601-A488-4B22-9D61-BE39AC79FD43}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0B5E6601-A488-4B22-9D61-BE39AC79FD43}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3DBB810-BA7B-4DB7-B6AC-B9ABDD3BD98F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3DBB810-BA7B-4DB7-B6AC-B9ABDD3BD98F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3DBB810-BA7B-4DB7-B6AC-B9ABDD3BD98F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3DBB810-BA7B-4DB7-B6AC-B9ABDD3BD98F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{8FF29DC5-0B0D-445B-9409-A38968CA88AC} = {814BB417-4E36-4A7E-954A-7475BB3D4652}
+		{6C183708-68FB-49EE-A52E-AA27E1E70EE7} = {BE2D0EC5-F094-4CAF-BF9B-23314A69D113}
+		{0B5E6601-A488-4B22-9D61-BE39AC79FD43} = {BE2D0EC5-F094-4CAF-BF9B-23314A69D113}
+		{B3DBB810-BA7B-4DB7-B6AC-B9ABDD3BD98F} = {BE2D0EC5-F094-4CAF-BF9B-23314A69D113}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {1DD22040-FA33-47A8-964F-5D198A59B873}
+	EndGlobalSection
+EndGlobal

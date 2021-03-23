@@ -1,0 +1,28 @@
+﻿<Window x:Class="CardGame13.GUI.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:CardGame13.GUI"
+        mc:Ignorable="d"
+        TextElement.FontSize="25"
+        ResizeMode="NoResize"
+        Title="Card Game 13" Height="400" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="2*"/>
+        </Grid.ColumnDefinitions>
+        <TextBlock Grid.Row="0" Grid.Column="0" Text="Name: " HorizontalAlignment="Left" VerticalAlignment="Center"/>
+        <TextBox Text="{Binding PlayerName}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
+        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
+            <Button Command="{Binding HostCommand}" Content="Host" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20"/>
+            <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <TextBox Text="{Binding IPAddress}" Width="200"/>
+        </StackPanel>
+    </Grid>
+</Window>

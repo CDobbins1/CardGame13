@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\CardGame13.Game\CardGame13.Game.csproj" />
+    <ProjectReference Include="..\CardGame13.Network\CardGame13.Network.csproj" />
+  </ItemGroup>
+
+</Project>
