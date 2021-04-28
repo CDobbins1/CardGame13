@@ -5,22 +5,21 @@ namespace CardGame13.Game
 {
     public class Dealer
     {
-        private List<Card> Deck { get; }
+        public List<Card> Deck { get; }
 
         public Dealer(List<Card> deck)
         {
             Deck = deck;
-            ShuffleDeck();
         }
 
         // DELETE ME
         public Dealer()
         {
             Deck = DeckBuilder.BuildDeck13();
-            ShuffleDeck();
+            //ShuffleDeck();
         }
 
-        private void ShuffleDeck()
+        public void ShuffleDeck()
         {
             var rand = new Random();
             int max = Deck.Count - 1;
