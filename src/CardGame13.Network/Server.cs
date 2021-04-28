@@ -13,7 +13,7 @@ namespace CardGame13.Network
 
         private RuleHandler RuleHandler { get; } = new RuleHandler();
 
-        private Dealer Dealer { get; } = new Dealer();
+        private Dealer Dealer { get; } = new Dealer(DeckBuilder.BuildDeck13());
 
         private List<Player> Players { get; } = new List<Player>();
 
