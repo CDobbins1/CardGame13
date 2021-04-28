@@ -1,4 +1,5 @@
-﻿
+﻿using System;
+
 namespace CardGame13.Game
 {
     public class Card
@@ -10,10 +11,10 @@ namespace CardGame13.Game
 
         public Card(string rank, int rankValue, string suit, int suitValue)
         {
-            Rank = rank;
-            RankValue = rankValue;
-            Suit = suit;
-            SuitValue = suitValue;
+            Rank = string.IsNullOrWhiteSpace(rank) ? throw new ArgumentException("Card must have valid Rank!", nameof(rank)) : rank;
+            RankValue = (rankValue < 0 || rankValue > 12) ? throw new ArgumentOutOfRangeException(nameof(rankValue)) : rankValue;
+            Suit = string.IsNullOrWhiteSpace(suit) ? throw new ArgumentException("Card must have valid Suit!", nameof(suit)) : suit;
+            SuitValue = (suitValue < 0 || suitValue > 3) ? throw new ArgumentOutOfRangeException(nameof(suitValue)) : suitValue;
         }
 
         public Card() { }
