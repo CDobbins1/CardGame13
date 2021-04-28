@@ -12,13 +12,6 @@ namespace CardGame13.Game
             Deck = deck;
         }
 
-        // DELETE ME
-        public Dealer()
-        {
-            Deck = DeckBuilder.BuildDeck13();
-            //ShuffleDeck();
-        }
-
         public void ShuffleDeck()
         {
             var rand = new Random();
