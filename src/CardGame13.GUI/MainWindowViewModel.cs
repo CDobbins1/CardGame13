@@ -1,23 +1,41 @@
 ﻿using CardGame13.Game;
 using CardGame13.Network;
-using System.Windows;
+using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 
 namespace CardGame13.GUI
 {
-    public class MainWindowViewModel
+    public class MainWindowViewModel : BaseViewModel
     {
-        public string PlayerName { get; set; } = "New Player";
-        public string IPAddress { get; set; }
+        private string _PlayerName = "New Player";
+        public string PlayerName
+        {
+            get => _PlayerName;
+            set => SetProperty(ref _PlayerName, value);
+        }
 
-        private Window Window { get; }
+        private string _IPAddress = "127.0.0.1";
+        public string IPAddress
+        {
+            get => _IPAddress;
+            set => SetProperty(ref _IPAddress, value);
+        }
 
-        private Client Client { get; set; } = new Client();
+        private string _ConnectionInfo = "";
+
+        public string ConnectionInfo
+        {
+            get => _ConnectionInfo;
+            set => SetProperty(ref _ConnectionInfo, value);
+        }
+
+        private IClosable Window { get; }
 
         public ICommand HostCommand { get; }
         public ICommand JoinCommand { get; }
 
-        public MainWindowViewModel(Window window)
+        public MainWindowViewModel(IClosable window)
         {
             HostCommand = new Command(OnHost);
             JoinCommand = new Command(OnJoin);
@@ -29,24 +47,43 @@ namespace CardGame13.GUI
             //Host game then join using local host
             var server = new Server();
             server.Start();
-            ConnectToServer("127.0.0.1");
+            IPAddress = "127.0.0.1";
+            Task.Run(ConnectToServer);
         }
 
         private void OnJoin()
         {
             //Join using ip input
-            ConnectToServer(IPAddress);
+            Task.Run(ConnectToServer);
         }
 
-        private async void ConnectToServer(string address)
+        private async void ConnectToServer()
         {
-            Client.Start(address);
+            await ConnectToServerAsync();
+        }
+
+        private async Task ConnectToServerAsync()
+        {
+            var client = InitializeClient(IPAddress);
+            var clientMessage = await client.ReceiveMessage();
+            App.Current.Dispatcher.Invoke(() =>
+            {
+                var gameWindow = new GameWindow(client, clientMessage);
+                gameWindow.Show();
+                Window?.Close();
+            });
+        }
+
+        private Client InitializeClient(string address)
+        {
+            ConnectionInfo = $"Connecting to: {address}";
+
+            var client = new Client();
             var player = new Player { Name = PlayerName };
+            client.Start(address);
             var message = new NetworkMessage { MessageType = NetworkHelper.MessageType.Initial, Player = player };
-            Client.SendMessage(message);
-            var gameWindow = new GameWindow(Client, await Client.ReceiveMessage());
-            gameWindow.Show();
-            Window.Close();
+            client.SendMessage(message);
+            return client;
         }
     }
 }
