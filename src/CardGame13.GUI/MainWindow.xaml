@@ -20,9 +20,10 @@
         <TextBlock Grid.Row="0" Grid.Column="0" Text="Name: " HorizontalAlignment="Left" VerticalAlignment="Center"/>
         <TextBox Text="{Binding PlayerName}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
         <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
-            <Button Command="{Binding HostCommand}" Content="Host" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="20"/>
-            <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+            <Button Command="{Binding HostCommand}" Content="Host" HorizontalAlignment="Center" Margin="20"/>
+            <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Center"/>
             <TextBox Text="{Binding IPAddress}" Width="200"/>
+            <TextBlock Text="{Binding ConnectionInfo}" HorizontalAlignment="Center"/>
         </StackPanel>
     </Grid>
 </Window>
