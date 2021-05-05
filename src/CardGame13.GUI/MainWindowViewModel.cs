@@ -64,26 +64,28 @@ namespace CardGame13.GUI
 
         private async Task ConnectToServerAsync()
         {
-            var client = InitializeClient(IPAddress);
-            var clientMessage = await client.ReceiveMessage();
-            App.Current.Dispatcher.Invoke(() =>
-            {
-                var gameWindow = new GameWindow(client, clientMessage);
-                gameWindow.Show();
-                Window?.Close();
-            });
-        }
-
-        private Client InitializeClient(string address)
-        {
+            var address = IPAddress;
             ConnectionInfo = $"Connecting to: {address}";
 
             var client = new Client();
             var player = new Player { Name = PlayerName };
-            client.Start(address);
-            var message = new NetworkMessage { MessageType = NetworkHelper.MessageType.Initial, Player = player };
-            client.SendMessage(message);
-            return client;
+            if (client.Start(address))
+            {
+                var message = new NetworkMessage { MessageType = NetworkHelper.MessageType.Initial, Player = player };
+                client.SendMessage(message);
+
+                var clientMessage = await client.ReceiveMessage();
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    var gameWindow = new GameWindow(client, clientMessage);
+                    gameWindow.Show();
+                    Window?.Close();
+                });
+            }
+            else
+            {
+                ConnectionInfo = "Failed to connect!";
+            }
         }
     }
 }

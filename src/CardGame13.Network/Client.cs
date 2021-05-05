@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CardGame13.Network
@@ -9,7 +10,7 @@ namespace CardGame13.Network
     {
         private NetworkStream? Stream { get; set; }
 
-        public void Start(string ipAddress)
+        public bool Start(string ipAddress)
         {
             int port = 9001;
             var endPoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
@@ -17,14 +18,27 @@ namespace CardGame13.Network
 
             Console.WriteLine("Waiting to connect...");
 
-            while (!socket.Connected)
+            int attempts = 0;
+            while (!socket.Connected && attempts < 5)
             {
                 try { socket.Connect(endPoint); }
-                catch (SocketException) { }
+                catch (SocketException) 
+                {
+                    attempts++;
+                    Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+                }
             }
+
+            if (!socket.Connected)
+            {
+                Console.WriteLine("Failed to connect");
+                return false;
+            }
+
             Console.WriteLine("Connected");
 
             Stream = new NetworkStream(socket, true);
+            return true;
         }
 
         public void SendMessage(NetworkMessage message) => NetworkHelper.SendMessage(Stream!, message);

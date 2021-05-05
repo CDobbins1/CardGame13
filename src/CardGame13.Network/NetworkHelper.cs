@@ -17,18 +17,18 @@ namespace CardGame13.Network
 
         public static byte[] Encode(NetworkMessage message)
         {
-            var xs = new XmlSerializer(typeof(NetworkMessage));
-            var sb = new StringBuilder();
-            var sw = new StringWriter(sb);
-            xs.Serialize(sw, message);
-            return Encoding.UTF8.GetBytes(sb.ToString());
+            var serializer = new XmlSerializer(typeof(NetworkMessage));
+            var stringBuilder = new StringBuilder();
+            var stringWriter = new StringWriter(stringBuilder);
+            serializer.Serialize(stringWriter, message);
+            return Encoding.UTF8.GetBytes(stringBuilder.ToString());
         }
 
         public static NetworkMessage Decode(byte[] buffer)
         {
-            var sr = new StringReader(Encoding.UTF8.GetString(buffer));
-            var xs = new XmlSerializer(typeof(NetworkMessage));
-            return (NetworkMessage)xs.Deserialize(sr);
+            var stringReader = new StringReader(Encoding.UTF8.GetString(buffer));
+            var serializer = new XmlSerializer(typeof(NetworkMessage));
+            return (NetworkMessage)serializer.Deserialize(stringReader);
         }
 
         public static int GetMessageSize(byte[] buffer) => IPAddress.NetworkToHostOrder(BitConverter.ToInt32(buffer));
@@ -43,18 +43,17 @@ namespace CardGame13.Network
 
         public static async Task<NetworkMessage> ReceiveMessage(NetworkStream stream)
         {
-
             //read header
             var header = new byte[4];
-            _ = await stream.ReadAsync(header, 0, 4).ConfigureAwait(false);
-            int messageSize = NetworkHelper.GetMessageSize(header);
+            await stream.ReadAsync(header, 0, 4).ConfigureAwait(false);
+            int messageSize = GetMessageSize(header);
 
             //read bytes according to header
             var buffer = new byte[messageSize];
-            _ = await stream.ReadAsync(buffer, 0, messageSize).ConfigureAwait(false);
+            await stream.ReadAsync(buffer, 0, messageSize).ConfigureAwait(false);
 
             //return the decoded message
-            return NetworkHelper.Decode(buffer);
+            return Decode(buffer);
         }
     }
 }

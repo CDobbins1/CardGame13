@@ -28,9 +28,10 @@ namespace CardGame13.Network
             var socket = new Socket(endPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp);
             socket.Bind(endPoint);
             socket.Listen(128);
-            Console.WriteLine("Waiting for players...");
 
-            await WaitForConnections(socket).ConfigureAwait(false);
+            Dealer.ShuffleDeck();
+            await WaitForConnectionsAsync(socket).ConfigureAwait(false);
+
             Console.WriteLine("All players connected");
             foreach (var stream in ClientStreams)
             {
@@ -42,7 +43,7 @@ namespace CardGame13.Network
         {
             while (true)
             {
-                var message = await NetworkHelper.ReceiveMessage(stream);
+                var message = await NetworkHelper.ReceiveMessage(stream).ConfigureAwait(false);
                 message.LastPlayBy = LastPlayerPlayed;
                 if (message.MessageType == NetworkHelper.MessageType.Pass)
                 {
@@ -62,8 +63,9 @@ namespace CardGame13.Network
             }
         }
 
-        private async Task WaitForConnections(Socket socket)
+        private async Task WaitForConnectionsAsync(Socket socket)
         {
+            Console.WriteLine("Waiting for players...");
             while (ClientStreams.Count < 4)
             {
                 var clientSocket = await Task.Factory.FromAsync(
@@ -75,8 +77,9 @@ namespace CardGame13.Network
                 NetworkStream clientStream = new NetworkStream(clientSocket, true);
                 ClientStreams.Add(clientStream);
 
-                var message = await NetworkHelper.ReceiveMessage(clientStream).ConfigureAwait(false);
-                message.Player!.PlayerNumber = Players.Count;
+                NetworkMessage message = await NetworkHelper.ReceiveMessage(clientStream).ConfigureAwait(false);
+                if (message.Player is null) throw new InvalidOperationException($"Initial message cannot have null player!");
+                message.Player.PlayerNumber = Players.Count;
                 message.Hand = Dealer.DealHand(Players.Count);
                 Players.Add(message.Player);
 
