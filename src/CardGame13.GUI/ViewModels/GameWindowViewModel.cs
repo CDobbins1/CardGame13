@@ -1,4 +1,5 @@
 ﻿using CardGame13.Game;
+using CardGame13.GUI.Commands;
 using CardGame13.Network;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace CardGame13.GUI
+namespace CardGame13.GUI.ViewModels
 {
     public class GameWindowViewModel : BaseViewModel
     {
@@ -69,7 +70,7 @@ namespace CardGame13.GUI
         public GameWindowViewModel(Client client, NetworkMessage message)
         {
             SendCommand = new ActionCommand(OnSend);
-            PassCommand = new Command(OnPass);
+            PassCommand = new RelayCommand(OnPass);
             Player = message.Player;
             Client = client;
             foreach (Card card in message.Hand) Cards.Add(card);

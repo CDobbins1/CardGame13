@@ -1,10 +1,12 @@
 ﻿using CardGame13.Game;
+using CardGame13.GUI.Commands;
+using CardGame13.GUI.Views;
 using CardGame13.Network;
 using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace CardGame13.GUI
+namespace CardGame13.GUI.ViewModels
 {
     public class MainWindowViewModel : BaseViewModel
     {
@@ -37,8 +39,8 @@ namespace CardGame13.GUI
 
         public MainWindowViewModel(IClosable window)
         {
-            HostCommand = new Command(OnHost);
-            JoinCommand = new Command(OnJoin);
+            HostCommand = new RelayCommand(OnHost);
+            JoinCommand = new RelayCommand(OnJoin);
             Window = window;
         }
 

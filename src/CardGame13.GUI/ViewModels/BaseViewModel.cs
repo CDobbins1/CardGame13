@@ -4,7 +4,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-namespace CardGame13.GUI
+namespace CardGame13.GUI.ViewModels
 {
     public abstract class BaseViewModel : INotifyPropertyChanged
     {

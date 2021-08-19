@@ -1,6 +1,7 @@
-﻿using System.Windows;
+﻿using CardGame13.GUI.ViewModels;
+using System.Windows;
 
-namespace CardGame13.GUI
+namespace CardGame13.GUI.Views
 {
     /// <summary>
     /// Interaction logic for MainWindow.xaml
