@@ -2,9 +2,7 @@
 using CardGame13.GUI.Commands;
 using CardGame13.GUI.Views;
 using CardGame13.Network;
-using System;
 using System.Threading.Tasks;
-using System.Windows.Input;
 
 namespace CardGame13.GUI.ViewModels
 {
@@ -14,14 +12,28 @@ namespace CardGame13.GUI.ViewModels
         public string PlayerName
         {
             get => _PlayerName;
-            set => SetProperty(ref _PlayerName, value);
+            set
+            {
+                if (SetProperty(ref _PlayerName, value))
+                {
+                    HostCommand.RaiseCanExecuteChanged();
+                    JoinCommand.RaiseCanExecuteChanged();
+                }
+            }
         }
 
         private string _IPAddress = "127.0.0.1";
         public string IPAddress
         {
             get => _IPAddress;
-            set => SetProperty(ref _IPAddress, value);
+            set
+            {
+                if (SetProperty(ref _IPAddress, value))
+                {
+                    HostCommand.RaiseCanExecuteChanged();
+                    JoinCommand.RaiseCanExecuteChanged();
+                }
+            }
         }
 
         private string _ConnectionInfo = "";
@@ -34,15 +46,17 @@ namespace CardGame13.GUI.ViewModels
 
         private IClosable Window { get; }
 
-        public ICommand HostCommand { get; }
-        public ICommand JoinCommand { get; }
+        public BaseCommand HostCommand { get; }
+        public BaseCommand JoinCommand { get; }
 
         public MainWindowViewModel(IClosable window)
         {
-            HostCommand = new RelayCommand(OnHost);
-            JoinCommand = new RelayCommand(OnJoin);
+            HostCommand = new RelayCommand(OnHost, HasRequiredFields);
+            JoinCommand = new RelayCommand(OnJoin, HasRequiredFields);
             Window = window;
         }
+
+        public bool HasRequiredFields() => !string.IsNullOrWhiteSpace(PlayerName) && !string.IsNullOrWhiteSpace(IPAddress);
 
         private void OnHost()
         {
