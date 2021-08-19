@@ -4,26 +4,96 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CardGame13.GUI.Views"
+        xmlns:ViewModels="clr-namespace:CardGame13.GUI.ViewModels"
+        d:DataContext="{d:DesignInstance Type=ViewModels:MainWindowViewModel}"
         mc:Ignorable="d"
         TextElement.FontSize="25"
         ResizeMode="NoResize"
-        Title="Card Game 13" Height="400" Width="300">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition Width="2*"/>
-        </Grid.ColumnDefinitions>
-        <TextBlock Grid.Row="0" Grid.Column="0" Text="Name: " HorizontalAlignment="Left" VerticalAlignment="Center"/>
-        <TextBox Text="{Binding PlayerName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
-            <Button Command="{Binding HostCommand}" Content="Host" HorizontalAlignment="Center" Margin="20"/>
-            <Button Command="{Binding JoinCommand}" Content="Join" HorizontalAlignment="Center"/>
-            <TextBox Text="{Binding IPAddress, UpdateSourceTrigger=PropertyChanged}" Width="200"/>
-            <TextBlock Text="{Binding ConnectionInfo}" HorizontalAlignment="Center"/>
-        </StackPanel>
-    </Grid>
+        Title="Card Game 13"
+        Height="400" Width="350"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent">
+
+    <Border Background="#333" CornerRadius="10">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="2*"/>
+            </Grid.ColumnDefinitions>
+            <Button Content="X" 
+                    Grid.Row="0" Grid.Column="1" 
+                    HorizontalAlignment="Right" VerticalAlignment="Top"
+                    FontSize="12" Foreground="White"
+                    Click="CloseWindow">
+                <Button.Style>
+                    <Style TargetType="Button">
+                        <Setter Property="Background" Value="#333"/>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="Red"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Style>
+                <Button.Template>
+                    <ControlTemplate TargetType="Button">
+                        <Border Width="25" Height="25"
+                                CornerRadius="20"
+                                Background="{TemplateBinding Background}">
+                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Button.Template>
+            </Button>
+            <TextBlock Grid.Row="0" Grid.Column="0" 
+                       Text="Name:" 
+                       HorizontalAlignment="Left" VerticalAlignment="Center" 
+                       Margin="20"
+                       Foreground="White"/>
+            <TextBox Text="{Binding PlayerName, UpdateSourceTrigger=PropertyChanged}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center" Width="180"/>
+            <TextBlock Grid.Row="1" Grid.Column="0" 
+                       Text="IP:" 
+                       HorizontalAlignment="Left" VerticalAlignment="Center" 
+                       Margin="20"
+                       Foreground="White"/>
+            <TextBox Text="{Binding IPAddress, UpdateSourceTrigger=PropertyChanged}" Width="200" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Left" VerticalAlignment="Center"/>
+            <StackPanel Grid.Row="2" Grid.ColumnSpan="2">
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                    <StackPanel.Resources>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#666"/>
+                            <Setter Property="Padding" Value="5"/>
+                            <Setter Property="FontSize" Value="18"/>
+                            <Setter Property="Foreground" Value="White"/>
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border Width="80" Height="30"
+                                                CornerRadius="10"
+                                                Background="{TemplateBinding Background}">
+                                            <ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
+                                    <Setter Property="Background" Value="#888"/>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </StackPanel.Resources>
+                    <Button Command="{Binding HostCommand}" Content="Host" VerticalAlignment="Center" Margin="10" Padding="10"/>
+                    <Button Command="{Binding JoinCommand}" Content="Join" VerticalAlignment="Center" Margin="10" Padding="10"/>
+                </StackPanel>
+                <TextBlock Text="{Binding ConnectionInfo}" HorizontalAlignment="Center" Foreground="White"/>
+            </StackPanel>
+        </Grid>
+    </Border>
 </Window>
