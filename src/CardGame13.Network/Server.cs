@@ -47,8 +47,10 @@ namespace CardGame13.Network
                 message.LastPlayBy = LastPlayerPlayed;
                 if (message.MessageType == NetworkHelper.MessageType.Pass)
                 {
-                    if ((message.Player!.PlayerNumber + 1) % 4 == LastPlayerPlayed) RuleHandler.FreeTurn();
-                    foreach (var clientStream in ClientStreams) NetworkHelper.SendMessage(clientStream, message);
+                    if ((message.Player!.PlayerNumber + 1) % 4 == LastPlayerPlayed)
+                    {
+                        RuleHandler.FreeTurn();
+                    }
                 }
                 else
                 {
@@ -56,10 +58,11 @@ namespace CardGame13.Network
                     if (validPlay)
                     {
                         Pile = message.Hand;
-                        foreach (var clientStream in ClientStreams) NetworkHelper.SendMessage(clientStream, message);
                         LastPlayerPlayed = message.Player!.PlayerNumber;
                     }
                 }
+                message.CurrentCategory = RuleHandler.CurrentCategory;
+                foreach (var clientStream in ClientStreams) NetworkHelper.SendMessage(clientStream, message);
             }
         }
 

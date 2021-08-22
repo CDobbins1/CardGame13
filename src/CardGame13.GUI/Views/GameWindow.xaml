@@ -4,16 +4,32 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:CardGame13.GUI.Views"
+        xmlns:ViewModels="clr-namespace:CardGame13.GUI.ViewModels"
+        d:DataContext="{d:DesignInstance Type=ViewModels:GameWindowViewModel}"
         mc:Ignorable="d"
         Title="GameWindow" Height="450" Width="800" Background="Green" FontSize="16">
     <Grid>
         <Grid.RowDefinitions>
-            
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-
-        </Grid.ColumnDefinitions>
-        <ListBox ItemsSource="{Binding Players}" SelectedItem="{Binding CurrentPlayer}" HorizontalAlignment="Center" VerticalAlignment="Top">
+        <StackPanel Grid.Row="0">
+            <ListBox ItemsSource="{Binding Players}" SelectedItem="{Binding CurrentPlayer}" HorizontalAlignment="Center">
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <StackPanel Orientation="Horizontal"/>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Focusable" Value="False"/>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+            <TextBlock Text="{Binding CurrentCategory, StringFormat='Category: {0}'}" HorizontalAlignment="Center" Foreground="White"/>
+        </StackPanel>
+        <ListBox ItemsSource="{Binding Pile}" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>
@@ -25,27 +41,14 @@
                 </Style>
             </ListBox.ItemContainerStyle>
         </ListBox>
-        <ListBox x:Name="ListBox" ItemsSource="{Binding Cards}" SelectionMode="Multiple" HorizontalAlignment="Center" VerticalAlignment="Bottom">
+        <Button Content="Pass" IsEnabled="{Binding CanPass}" Command="{Binding PassCommand}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="24" Grid.Row="1"/>
+        <Button Content="Submit" IsEnabled="{Binding CanSubmit}" Command="{Binding SendCommand}" CommandParameter="{Binding ElementName=ListBox, Path=SelectedItems}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="24" Grid.Row="1"/>
+        <ListBox x:Name="ListBox" ItemsSource="{Binding Cards}" Grid.Row="2" SelectionMode="Multiple" HorizontalAlignment="Center">
             <ListBox.ItemsPanel>
                 <ItemsPanelTemplate>
                     <StackPanel Orientation="Horizontal"/>
                 </ItemsPanelTemplate>
             </ListBox.ItemsPanel>
         </ListBox>
-        <ListBox ItemsSource="{Binding Pile}" HorizontalAlignment="Center" VerticalAlignment="Center">
-            <ListBox.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <StackPanel Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </ListBox.ItemsPanel>
-            <ListBox.ItemContainerStyle>
-                <Style TargetType="{x:Type ListBoxItem}">
-                    <Setter Property="Focusable" Value="False"/>
-                </Style>
-            </ListBox.ItemContainerStyle>
-        </ListBox>
-        <!--<TextBlock Text="{Binding PlayerName}" HorizontalAlignment="Left" VerticalAlignment="Top"/>-->
-        <Button Content="Pass" IsEnabled="{Binding CanPass}" Command="{Binding PassCommand}" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="24"/>
-        <Button Content="Submit" IsEnabled="{Binding CanSubmit}" Command="{Binding SendCommand}" CommandParameter="{Binding ElementName=ListBox, Path=SelectedItems}" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="24"/>
     </Grid>
 </Window>

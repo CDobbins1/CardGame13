@@ -22,6 +22,14 @@ namespace CardGame13.GUI.ViewModels
 
         public ObservableCollection<Player> Players { get; } = new ObservableCollection<Player>();
 
+        private string _CurrentCategory = "";
+
+        public string CurrentCategory
+        {
+            get => _CurrentCategory;
+            set => SetProperty(ref _CurrentCategory, value);
+        }
+
         private Client Client { get; }
 
         public ObservableCollection<Card> Cards { get; } = new ObservableCollection<Card>();
@@ -60,6 +68,7 @@ namespace CardGame13.GUI.ViewModels
         {
             while (Players.Count < 4) await WaitForPlayers();
             if (IsFirstTurn()) CanSubmit = true;
+            CurrentCategory = "First";
             WaitForPlays();
         }
 
@@ -110,6 +119,7 @@ namespace CardGame13.GUI.ViewModels
                     CurrentPlayer = Players[(previousPlayerNumber + 1) % 4];
                     UpdateTurn(previousPlayerNumber);
                 });
+                CurrentCategory = incomingMessage.CurrentCategory.ToString();
             }
         }
 
