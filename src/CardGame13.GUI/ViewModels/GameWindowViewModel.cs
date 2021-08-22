@@ -17,14 +17,7 @@ namespace CardGame13.GUI.ViewModels
         public Player CurrentPlayer
         {
             get => _CurrentPlayer;
-            set
-            {
-                if (_CurrentPlayer != value)
-                {
-                    _CurrentPlayer = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _CurrentPlayer, value);
         }
 
         public ObservableCollection<Player> Players { get; } = new ObservableCollection<Player>();
@@ -39,28 +32,14 @@ namespace CardGame13.GUI.ViewModels
         public bool CanSubmit
         {
             get => _CanSubmit;
-            set
-            {
-                if (_CanSubmit != value)
-                {
-                    _CanSubmit = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _CanSubmit, value);
         }
 
         private bool _CanPass = false;
         public bool CanPass
         {
             get => _CanPass;
-            set
-            {
-                if (_CanPass != value)
-                {
-                    _CanPass = value;
-                    OnPropertyChanged();
-                }
-            }
+            set => SetProperty(ref _CanPass, value);
         }
 
         public ICommand SendCommand { get; }
