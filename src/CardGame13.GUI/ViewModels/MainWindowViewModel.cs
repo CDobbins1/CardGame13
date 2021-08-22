@@ -85,7 +85,7 @@ namespace CardGame13.GUI.ViewModels
 
             var client = new Client();
             var player = new Player { Name = PlayerName };
-            if (client.Start(address))
+            if (await client.StartAsync(address))
             {
                 var message = new NetworkMessage { MessageType = NetworkHelper.MessageType.Initial, Player = player };
                 client.SendMessage(message);

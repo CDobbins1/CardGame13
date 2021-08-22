@@ -41,7 +41,7 @@ namespace CardGame13.Network
             stream.Write(body, 0, body.Length);
         }
 
-        public static async Task<NetworkMessage> ReceiveMessage(NetworkStream stream)
+        public static async Task<NetworkMessage> ReceiveMessageAsync(NetworkStream stream)
         {
             //read header
             var header = new byte[4];

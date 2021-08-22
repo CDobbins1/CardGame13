@@ -43,7 +43,7 @@ namespace CardGame13.Network
         {
             while (true)
             {
-                var message = await NetworkHelper.ReceiveMessage(stream).ConfigureAwait(false);
+                var message = await NetworkHelper.ReceiveMessageAsync(stream).ConfigureAwait(false);
                 message.LastPlayBy = LastPlayerPlayed;
                 if (message.MessageType == NetworkHelper.MessageType.Pass)
                 {
@@ -77,7 +77,7 @@ namespace CardGame13.Network
                 NetworkStream clientStream = new(clientSocket, true);
                 ClientStreams.Add(clientStream);
 
-                NetworkMessage message = await NetworkHelper.ReceiveMessage(clientStream).ConfigureAwait(false);
+                NetworkMessage message = await NetworkHelper.ReceiveMessageAsync(clientStream).ConfigureAwait(false);
                 if (message.Player is null) throw new InvalidOperationException($"Initial message cannot have null player!");
                 message.Player.PlayerNumber = Players.Count;
                 message.Hand = Dealer.DealHand(Players.Count);

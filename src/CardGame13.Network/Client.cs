@@ -10,7 +10,7 @@ namespace CardGame13.Network
     {
         private NetworkStream? Stream { get; set; }
 
-        public bool Start(string ipAddress)
+        public async Task<bool> StartAsync(string ipAddress)
         {
             int port = 9001;
             var endPoint = new IPEndPoint(IPAddress.Parse(ipAddress), port);
@@ -19,13 +19,13 @@ namespace CardGame13.Network
             Console.WriteLine("Waiting to connect...");
 
             int attempts = 0;
-            while (!socket.Connected && attempts < 5)
+            while (!socket.Connected && attempts < 3)
             {
-                try { socket.Connect(endPoint); }
+                try { await socket.ConnectAsync(endPoint); }
                 catch (SocketException)
                 {
                     attempts++;
-                    Task.Delay(TimeSpan.FromSeconds(1)).Wait();
+                    await Task.Delay(TimeSpan.FromSeconds(1));
                 }
             }
 
@@ -43,6 +43,6 @@ namespace CardGame13.Network
 
         public void SendMessage(NetworkMessage message) => NetworkHelper.SendMessage(Stream!, message);
 
-        public async Task<NetworkMessage> ReceiveMessage() => await NetworkHelper.ReceiveMessage(Stream!).ConfigureAwait(false);
+        public async Task<NetworkMessage> ReceiveMessage() => await NetworkHelper.ReceiveMessageAsync(Stream!).ConfigureAwait(false);
     }
 }
