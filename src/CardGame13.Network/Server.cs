@@ -9,13 +9,13 @@ namespace CardGame13.Network
 {
     public class Server
     {
-        private List<NetworkStream> ClientStreams { get; set; } = new List<NetworkStream>();
+        private List<NetworkStream> ClientStreams { get; } = new();
 
-        private RuleHandler RuleHandler { get; } = new RuleHandler();
+        private RuleHandler RuleHandler { get; } = new();
 
-        private Dealer Dealer { get; } = new Dealer(DeckBuilder.BuildDeck13());
+        private Dealer Dealer { get; } = new(DeckBuilder.BuildDeck13());
 
-        private List<Player> Players { get; } = new List<Player>();
+        private List<Player> Players { get; } = new();
 
         private List<Card>? Pile { get; set; } = null;
 
@@ -74,7 +74,7 @@ namespace CardGame13.Network
                     null).ConfigureAwait(false);
 
                 Console.WriteLine("User connected");
-                NetworkStream clientStream = new NetworkStream(clientSocket, true);
+                NetworkStream clientStream = new(clientSocket, true);
                 ClientStreams.Add(clientStream);
 
                 NetworkMessage message = await NetworkHelper.ReceiveMessage(clientStream).ConfigureAwait(false);

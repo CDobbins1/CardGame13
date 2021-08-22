@@ -22,7 +22,7 @@ namespace CardGame13.Network
             while (!socket.Connected && attempts < 5)
             {
                 try { socket.Connect(endPoint); }
-                catch (SocketException) 
+                catch (SocketException)
                 {
                     attempts++;
                     Task.Delay(TimeSpan.FromSeconds(1)).Wait();
